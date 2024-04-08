@@ -17,15 +17,19 @@ export const sendEmail = async ({ email, emailType, userId }: sendEmailInterface
                 { verifyToken: hashedToken, verifyTokenExpiry: Date.now() + 3600000 })
         } else if (emailType === "RESET") {
             await User.findByIdAndUpdate(userId,
-                { forgotPasswordToken: hashedToken, forgotPasswordTokenExpiry: Date.now() + 3600000 })
+                {
+                    $set: {
+                        forgotPasswordToken: hashedToken, forgotPasswordTokenExpiry: Date.now() + 3600000
+                    }
+                })
         }
 
         const transport = nodemailer.createTransport({
             host: "sandbox.smtp.mailtrap.io",
             port: 2525,
             auth: {
-                user: "94432183010bc9",
-                pass: "df8cfbd956e053"
+                user: process.env.MAILER_ID || "",
+                pass: process.env.MAILER_PASSWORD || ""
             }
         });
 

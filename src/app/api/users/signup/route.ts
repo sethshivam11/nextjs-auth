@@ -38,6 +38,7 @@ export async function POST(request: NextRequest) {
         // send verification email
         await sendEmail({ email, emailType: "VERIFY", userId: savedUser._id })
 
+        savedUser.password = undefined
 
         return NextResponse.json({
             message: "User registed successfully",
