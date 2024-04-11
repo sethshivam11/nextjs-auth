@@ -18,11 +18,11 @@ function LoginPage() {
     try {
       setLoading(true);
       const response = await axios.post("/api/users/login", user);
+      toast.success("Login success");
       console.log("Signup success", response.data);
       router.push("/profile");
     } catch (error: any) {
-      console.log("Signup failed");
-      toast.error(error.message);
+      toast.error(error.response.data.error || "Login failed");
     } finally {
       setLoading(false);
     }
@@ -61,7 +61,7 @@ function LoginPage() {
       >
         {loading ? "Loading" : "Login"}
       </button>
-      <Link className="underline hover:no-underline" href="/login">
+      <Link className="underline hover:no-underline" href="/signup">
         Visit Signup
       </Link>
     </div>

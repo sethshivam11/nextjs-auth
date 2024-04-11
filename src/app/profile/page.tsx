@@ -22,7 +22,7 @@ function ProfilePage() {
 
   const logout = async () => {
     try {
-      await axios.get("/api/users/logut");
+      await axios.get("/api/users/logout");
       toast.success("Logout success");
       router.push("/login");
     } catch (error: any) {
